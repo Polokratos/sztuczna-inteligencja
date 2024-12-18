@@ -7,7 +7,7 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11.0"
+python = "3.11.0"
 
 imbalanced-learn = "^0.12.4"
 jupyterlab = "^4.2.5"
@@ -33,6 +33,25 @@ tensorboard = "^2.18.0"
 tqdm = "^4.67.1"
 protobuf = "3.20.0"
 
+[tool.poetry.group.cuda]
+        optional = true
+
+        # https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix
+        [tool.poetry.group.cuda.dependencies]
+            torch       = { version = "^2.5.1", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+
+[tool.poetry.extras]
+    cuda = ["torch"]
+
+[[tool.poetry.source]]
+    name     = "pytorch-cuda"
+    priority = "explicit"
+    url      = "https://download.pytorch.org/whl/cu121"
+
+[[tool.poetry.source]]
+    name     = "pytorch-cpu"
+    priority = "explicit"
+    url      = "https://download.pytorch.org/whl/cpu"
 
 [build-system]
 requires = ["poetry-core"]
